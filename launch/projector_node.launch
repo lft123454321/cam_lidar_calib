@@ -1,0 +1,9 @@
+<launch>
+    <node pkg="cam_lidar_calib" type="projector_node" name="projector_node" output="screen">
+        <param name="image_topic" value="/offline/camera/1" />
+        <param name="cloud_topic" value="/top_c16/lslidar_point_cloud" />
+        <param name="camera_info_yaml" value="/home/think/2025-07-28-cam_calib/NanoVanSE_cam1/ost.yaml" />
+        <param name="extrinsic_path" value="/home/think/2025-07-28-cam_calib/NanoVanSE_cam1/extrinsic.yaml" />
+        <param name="output_topic" value="/projected_image" />
+    </node>
+</launch>

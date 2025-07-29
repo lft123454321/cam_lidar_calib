@@ -1,0 +1,21 @@
+<launch>
+    <arg name="image_topic" default="/offline/camera/1" />
+    <arg name="image_type" default="sensor_msgs/Image" />
+    <arg name="cloud_topic" default="/top_c16/lslidar_point_cloud" />
+    <arg name="clicked_point_topic" default="/clicked_point" />
+    <arg name="camera_info_yaml" default="/home/think/2025-07-28-cam_calib/NanoVanSE_cam1/ost.yaml" />
+
+    <node pkg="cam_lidar_calib" type="calib_node" name="cam_lidar_calib_node" output="screen"
+        args="$(arg image_topic) $(arg cloud_topic) $(arg clicked_point_topic) $(arg camera_info_yaml)"
+    >
+        <param name="image_topic" value="$(arg image_topic)" />
+        <param name="cloud_topic" value="$(arg cloud_topic)" />
+        <param name="clicked_point_topic" value="$(arg clicked_point_topic)" />
+        <param name="camera_info_yaml" value="$(arg camera_info_yaml)" />
+    </node>
+
+    <node pkg="cam_lidar_calib" type="rqt_pixel_picker.py" name="rqt_pixel_picker" output="screen">
+        <param name="image_topic" value="$(arg image_topic)" />
+        <param name="image_type" value="$(arg image_type)" />
+    </node>
+</launch>
