@@ -23,14 +23,13 @@ source devel/setup.bash
 roslaunch cam_lidar_calib calib_node.launch
 ```
 
-### 3. Run rqt Pixel Picker
+### 3. Run RViz
 ```
-rosrun cam_lidar_calib rqt_pixel_picker.py
+rviz -d rviz/calib.rviz
 ```
-Or load the plugin in rqt_gui.
 
 ### 4. Select Points
-- In the rqt window, click on the image to select a pixel. The plugin will publish `/selected_pixel`.
+- In the rqt window, click on the image to select a pixel. The plugin will publish `/selected_pixel`. You can open `/tmp/find_region.png` to view the magic wand selection range in real-time (if the selection range is incorrect, try changing the threshold in the code or use a calibration object with more contrast to the environment)
 - In RViz, click a point in the point cloud (topic `/clicked_point`).
 - The calibration node will process both, find regions, and collect pairs.
 
@@ -40,13 +39,13 @@ Or load the plugin in rqt_gui.
 ## Calibration Workflow
 
 1. **Start Calibration Node**
-   - Launch `calib_node` with the provided launch file.
-   - Configure topics and camera info YAML path as needed.
+   - Use the launch file to start `calib_node`.
+   - Configure image, point cloud, and camera info YAML path parameters as needed.
 
 2. **Collect Correspondences**
-   - Use RQT or other GUI to select image pixels (`/selected_pixel` topic).
+   - Select image pixels via RQT or other GUI (`/selected_pixel` topic).
    - Click point cloud locations in RViz (`/clicked_point` topic).
-   - The node will automatically collect image and cloud points, and display collection status in the console.
+   - The node automatically collects image and cloud points, and displays collection status in the console.
    - The selected cloud region is published to `/clicked_cloud_region` for visualization in RViz.
 
 3. **Automatic Extrinsic Calculation**
@@ -55,8 +54,8 @@ Or load the plugin in rqt_gui.
 ## Verification Workflow
 
 1. **Start Projector Node**
-   - Launch `projector_node` with the provided launch file.
-   - Set the image, cloud, camera info, and extrinsic YAML paths as parameters.
+   - Use the launch file to start `projector_node`.
+   - Set image, cloud, camera info, and extrinsic YAML paths as parameters.
 
 2. **Visualization**
    - The node subscribes to image and point cloud topics, projects the cloud onto the image using the extrinsic and intrinsic parameters.
